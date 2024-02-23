@@ -14,9 +14,9 @@ const User = () => {
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
   const [newUserData, setNewUserData] = useState({ name: "", email: "" });
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [editModalIsOpen, setEditModalIsOpen] = useState(false); // New state for edit modal
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false); // New state for delete modal
-  const [deletingUserId, setDeletingUserId] = useState(null); // New state to track the user id to be deleted
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [deletingUserId, setDeletingUserId] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -45,7 +45,7 @@ const User = () => {
     setEditingUser(user);
     setEditedName(user.Name);
     setEditedEmail(user.Email);
-    setEditModalIsOpen(true); // Open edit modal
+    setEditModalIsOpen(true);
   };
 
   const handleSaveEdit = async () => {
@@ -56,7 +56,6 @@ const User = () => {
         Email: editedEmail,
       };
 
-      // Check if the edited email already exists in the database
       const isDuplicateEmail = users.some(
         (user) => user.ID !== updatedUser.ID && user.Email === editedEmail
       );
@@ -90,8 +89,8 @@ const User = () => {
         setEditingUser(null);
         setEditedName("");
         setEditedEmail("");
-        setEditModalIsOpen(false); // Close edit modal
-        toast.success("Data editing complete"); // Add autoClose option to toast
+        setEditModalIsOpen(false);
+        toast.success("Data editing complete");
       } catch (error) {
         console.error(error);
       }
@@ -111,7 +110,7 @@ const User = () => {
       }
       const updatedUsers = users.filter((user) => user.ID !== deletingUserId);
       setUsers(updatedUsers);
-      setDeleteModalIsOpen(false); // Close delete modal
+      setDeleteModalIsOpen(false);
       toast.success("User data has been successfully deleted");
     } catch (error) {
       console.error(error);
@@ -126,7 +125,6 @@ const User = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if the email already exists in the database
     const isDuplicateEmail = users.some(
       (user) => user.Email === newUserData.email
     );
@@ -152,7 +150,7 @@ const User = () => {
       const userData = await response.json();
       setUsers([...users, userData]);
       setNewUserData({ name: "", email: "" });
-      setModalIsOpen(false); // Close add modal
+      setModalIsOpen(false);
       toast.success("User information added successfully.");
     } catch (error) {
       console.error(error);
@@ -168,9 +166,7 @@ const User = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-semibold mb-4 text-center">
-        User 
-      </h1>
+      <h1 className="text-3xl font-semibold mb-4 text-center">User</h1>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg w-4/5 mx-auto">
         <div className="flex justify-evenly">
           <button
@@ -224,9 +220,8 @@ const User = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel="Add information
-        "
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg"
+        contentLabel="Add information"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg animate__animated animate__fadeIn"
         overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50"
       >
         <h2 className="text-2xl font-semibold mb-4">เพิ่มข้อมูลผู้ใช้</h2>
@@ -276,7 +271,7 @@ const User = () => {
         isOpen={editModalIsOpen}
         onRequestClose={() => setEditModalIsOpen(false)}
         contentLabel="Edit Student"
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg animate__animated animate__fadeIn"
         overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50"
       >
         <h2 className="text-2xl font-semibold mb-4">แก้ไขข้อมูลผู้ใช้</h2>
@@ -336,7 +331,7 @@ const User = () => {
         isOpen={deleteModalIsOpen}
         onRequestClose={() => setDeleteModalIsOpen(false)}
         contentLabel="ยืนยันการลบข้อมูล"
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg animate__animated animate__fadeIn"
         overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50"
       >
         <h2 className="text-2xl font-semibold mb-4">ยืนยันการลบข้อมูล</h2>
@@ -357,7 +352,7 @@ const User = () => {
         </div>
       </Modal>
       
-      <ToastContainer />
+      <ToastContainer className="bg-blue-500 border border-blue-700" />
     </div>
   );
 };
